@@ -69,3 +69,33 @@ def get_file_size(file_path: str) -> int:
         int: 파일 크기 (bytes)
     """
     return os.path.getsize(file_path)
+
+
+def save_extracted_text(text: str, pdf_filename: str, output_dir: str = "extracted") -> str:
+    """
+    추출된 텍스트를 파일로 저장
+
+    Args:
+        text: 추출된 텍스트
+        pdf_filename: 원본 PDF 파일명 (확장자 제거용)
+        output_dir: 출력 디렉토리 경로
+
+    Returns:
+        str: 저장된 텍스트 파일의 전체 경로
+    """
+    # 출력 디렉토리 생성 (존재하지 않는 경우)
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    # PDF 파일명에서 확장자 제거하고 .txt로 변경
+    base_name = Path(pdf_filename).stem
+    text_filename = f"{base_name}.txt"
+
+    # 텍스트 파일 저장 경로
+    text_file_path = output_path / text_filename
+
+    # 텍스트 저장
+    with open(text_file_path, "w", encoding="utf-8") as f:
+        f.write(text)
+
+    return str(text_file_path)

@@ -4,7 +4,7 @@ PDF 컨트롤러 - API 엔드포인트 레이어
 from fastapi import APIRouter, File, UploadFile, HTTPException
 from app.services import PDFService
 from app.models import PDFUploadResponse, SupportedFormatsResponse
-from app.core.utils import generate_unique_filename, save_uploaded_file, get_file_size
+from app.core.utils import generate_unique_filename, save_uploaded_file, get_file_size, save_extracted_text
 import logging
 
 logger = logging.getLogger(__name__)
@@ -87,6 +87,10 @@ async def upload_pdf(file: UploadFile = File(...)):
         format_detected = result["metadata"]["format_detected"]
         is_supported = pdf_service.is_supported_format(format_detected)
 
+        # 추출된 텍스트를 파일로 저장
+        extracted_text_path = save_extracted_text(result["text"], unique_filename)
+        logger.info(f"Extracted text saved to: {extracted_text_path}")
+
         # 응답 데이터 구성
         response_data = {
             "success": True,
@@ -98,7 +102,8 @@ async def upload_pdf(file: UploadFile = File(...)):
             "total_pages": result["metadata"]["total_pages"],
             "format_detected": format_detected,
             "is_supported_format": is_supported,
-            "preview": result["text"][:500] + "..." if len(result["text"]) > 500 else result["text"]
+            "preview": result["text"][:500] + "..." if len(result["text"]) > 500 else result["text"],
+            "extracted_text_path": extracted_text_path
         }
 
         # 지원하지 않는 형식 경고

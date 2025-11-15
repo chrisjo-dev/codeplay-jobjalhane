@@ -24,6 +24,7 @@ class PDFUploadResponse(BaseModel):
     format_detected: str = Field(..., description="감지된 형식")
     is_supported_format: bool = Field(..., description="지원하는 형식 여부")
     preview: str = Field(..., description="텍스트 미리보기 (500자)")
+    extracted_text_path: str = Field(..., description="추출된 텍스트 파일 경로")
     warning: Optional[str] = Field(None, description="경고 메시지")
 
 
