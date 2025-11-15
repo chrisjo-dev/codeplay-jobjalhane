@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { useState, useRef } from "react";
 import { motion } from "motion/react";
 import { AnimatedHandshake } from "./AnimatedHandshake";
+import { uploadPDF } from "../utils/api";
 
 interface HomeScreenProps {
   onNavigate: (screen: string, fileName?: string) => void;
@@ -11,6 +12,7 @@ interface HomeScreenProps {
 export function HomeScreen({ onNavigate }: HomeScreenProps) {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,17 +24,45 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
     }
   };
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (!uploadedFile) {
       alert('먼저 PDF 파일을 업로드해주세요.');
       return;
     }
 
     setIsUploading(true);
-    setTimeout(() => {
+    setUploadError(null);
+
+    try {
+      console.log('Uploading PDF:', uploadedFile.name);
+
+      // 백엔드로 PDF 업로드
+      const result = await uploadPDF(uploadedFile);
+
+      console.log('PDF Upload Success:', {
+        filename: result.filename,
+        format: result.format_detected,
+        pages: result.total_pages,
+        textLength: result.text.length,
+        extractedPath: result.extracted_text_path
+      });
+
+      // 경고 메시지 표시
+      if (result.warning) {
+        console.warn('Warning:', result.warning);
+      }
+
+      // 성공 시 분석 화면으로 이동
       setIsUploading(false);
       onNavigate('analyze', uploadedFile.name, 'analysis');
-    }, 2000);
+
+    } catch (error: any) {
+      console.error('PDF Upload Error:', error);
+      const errorMsg = error.response?.data?.detail || error.message || 'PDF 업로드 중 오류가 발생했습니다.';
+      setUploadError(errorMsg);
+      setIsUploading(false);
+      alert(errorMsg);
+    }
   };
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
