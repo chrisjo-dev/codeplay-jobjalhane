@@ -1,0 +1,39 @@
+{
+  "id": "chatcmpl-Cc85ePTJKsrCfTup8LUmpwPwzEaLl",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "```json\n{\n    \"strengths\": [\n        \"관찰력과 분석력을 바탕으로 한 문제 해결 능력\",\n        \"체계적이고 창조적인 탐구 능력\",\n        \"독립적이고 개방적인 태도로 정보 수집 및 분석\"\n    ],\n    \"interests\": [\n        \"탐구형 활동: 사고/아이디어 지향\",\n        \"사회형 활동: 자선/사람지향\"\n    ],\n    \"weakness\": \"규칙적이고 반복적인 활동이나 리더십 발휘에 대한 선호도 낮음\"\n}\n```",
+        "refusal": null,
+        "role": "assistant",
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null,
+        "annotations": []
+      }
+    }
+  ],
+  "created": 1763203598,
+  "model": "gpt-4o-2024-08-06",
+  "object": "chat.completion",
+  "service_tier": "default",
+  "system_fingerprint": "fp_cbf1785567",
+  "usage": {
+    "completion_tokens": 126,
+    "prompt_tokens": 1961,
+    "total_tokens": 2087,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": 0,
+      "audio_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 1920
+    }
+  }
+}
