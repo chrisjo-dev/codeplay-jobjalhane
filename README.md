@@ -16,6 +16,8 @@ CodePlay 팀에 오신 것을 환영합니다! 우리의 미션은 AI로 사용�
 
 ## AI 기반 커리어 정체성 분석 및 향후 3년 로드맵 생성 서비스
 > 랜딩 페이지
+> 
+> [와이어 프레임](https://github.com/chrisjo-dev/codeplay-jobjalhane/blob/main/wireframe.md)
 <img width="2036" height="1332" alt="image" src="https://github.com/user-attachments/assets/e2946d1b-326c-4c42-9317-d2a5cf953b39" />
 
 
